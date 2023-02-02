@@ -1,0 +1,66 @@
+{% extends 'base.html'%}
+{% block content %}
+<div class="container text-center">
+    <div class="row">
+        <div class="col mt-5">
+            <h1>
+                Welcom IN <br>
+
+                Killy_SHOP
+
+            </h1>
+        </div>
+    </div>
+</div>
+<div class="container text-center">
+    <div class="row">
+      <div class="col-12 mt-5">
+        <div class="card" style="width: 18rem;">
+          <div class="card-header">
+            Categories
+          </div>
+          <ul class="list-group list-group-flush">
+           <a href="#"> <li class="list-group-item">SNEKERS</li></a>
+           <a href="#"> <li class="list-group-item">VETEMENT</li></a>
+           <a href="#"> <li class="list-group-item"> ACCESSOIRE</li></a>
+            
+          </ul>
+        </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      {% for produit in produits%}
+      <div class="col-md-3 mt-5">
+        <div class="card">
+          <img src="{{produit.image.url}}" alt="" class="card-ing-top">
+          <div class="card-body">
+            <div class="card-title">{{produit.name}}</div>
+            <div class="card-text">{{produit.price}} XOF</div>
+           <a href="{% url 'detail' produit.id %}"><button class="btn btn-warning">voir</button></a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
+{% endblock %}

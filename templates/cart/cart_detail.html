@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content  %}
+
+<h1>votre panier </h1>
+<div class="row">
+    {% if cart  %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>images</th>
+                <th>product</th>
+                <th>quantite</th>
+                <th>retirer </th>
+                <th>pris_unitaire</th>
+                <th>total_price</th>
+            </tr>
+            <tbody>
+                {% for item in  cart %}
+                {% with product=item.product %}
+                <tr>
+                    <td>
+                        <img src="{{ product.image.url }}" class="img-fluid" width="200px">
+                    </td>
+                    <td>
+                        {{product.name}}
+                    </td>
+                    <td>
+                        <form method="POST" action="{% url 'add' product.id %}">
+                            {% csrf_token %}
+                            {{item.update_quantity_form.quantity}}
+                            {{item.update_quantity_form.override}}
+                            <input type="submit" value="changer">
+
+                        </form>
+                    </td>
+                    <td>
+                        <form method="POST" action="{% url 'remove' product.id %}">
+                            {% csrf_token %}
+                            <input type="submit" value="supprimer">
+                    </td>
+                    <td>
+                        {{item.price}}
+                    </td>
+                    <td>
+                        {{item.total_price}}
+                    </td>
+                </tr>
+                {% endwith %}
+                {% endfor %}
+            </tbody>
+        </thead>
+    </table>
+    <a href="{% url 'order_create'%}" class="btn btn-primary " class="text-center">Valider votre commande</a>
+    {% else %}
+    <h1 class="text-center">VOTRE PANIER EST VIDE </h1>
+   <p class="text-center"><a href="/" class="btn btn-primary">continuer votre acchat </a> </p>
+    {% endif %}
+</div>
+{% endblock %}

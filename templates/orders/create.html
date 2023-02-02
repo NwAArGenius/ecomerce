@@ -1,0 +1,27 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="row">
+  <div class="col-md-8 mx-auto">
+    <h1>Valider votre commande</h1>
+    <ul>
+      {% for item in cart %}
+      <li>
+        {{item.product.name}} quantite {{item.quantity}} :::
+        {{item.total_price|floatformat}} XOF
+      </li>
+      {% endfor %}
+    </ul>
+    <form method="POST" action="">
+      {% csrf_token %} {% for field in form %}
+      <div class="form-group mt-2">
+        <label for="{{field.id_labale}}" class="form-label"
+          >{{field.label}}</label
+        >
+        {{field}}
+      </div>
+      {% endfor %}
+      <input class="btn btn-dark" type="submit" value="Valider" />
+    </form>
+  </div>
+</div>
+{% endblock %}
